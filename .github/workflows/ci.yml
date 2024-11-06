@@ -13,18 +13,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.REPO_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Configure Git for Actions
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions@github.com"
         git config --global credential.helper store
-
-    - name: Set git credentials for pushing to repository
-      run: |
-        git config --global credential.helper store
-        echo "https://REPO_TOKEN:@github.com" > ~/.git-credentials
+        echo "https://GITHUB_TOKEN:@github.com" > ~/.git-credentials
         
     - name: Set up JDK 17
       uses: actions/setup-java@v4
