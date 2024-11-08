@@ -45,11 +45,11 @@ jobs:
     
     - name: 'Tag Image'
       run: |
-          docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
           
     - name: 'Push image'
     - run: |
-          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }}
+          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
   
 
     - name: Update Kubernetes resources
