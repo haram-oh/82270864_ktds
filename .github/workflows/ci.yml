@@ -37,7 +37,7 @@ jobs:
       with:
         login-server: ce82270864acr.azurecr.io
         username: ce82270864acr
-        password: sJn8Q~~Ymz9oTOvYHEdU56XF7MKNguMsro0HScum
+        password: ${{ secrets.PASSWORD }}
         
     - name: 'Build Image'
       run: |
