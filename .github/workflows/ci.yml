@@ -43,10 +43,8 @@ jobs:
       run: |
           docker build -t cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} -f Dockerfile .
           docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
-    
-    - name: 'Push image'
-      run: |
           docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+    
 
     - name: Update Kubernetes resources
       run: |
