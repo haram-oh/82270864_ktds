@@ -42,9 +42,6 @@ jobs:
     - name: 'Build Image'
       run: |
           docker build -t cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} -f Dockerfile .
-    
-    - name: 'Tag Image'
-      run: |
           docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
           
     - name: 'Push image'
