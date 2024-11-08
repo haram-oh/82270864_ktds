@@ -24,10 +24,10 @@ jobs:
         
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
+        
     - name: Setup Kustomize
       uses: imranismail/setup-kustomize@v1
-
+        
     - name: 'Gen Version'
       id: gen-version
       run: echo "VERSION=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
@@ -38,23 +38,23 @@ jobs:
         login-server: ce82270864acr.azurecr.io
         username: ce82270864acr
         password: sJn8Q~~Ymz9oTOvYHEdU56XF7MKNguMsro0HScum
-
+        
     - name: 'Build Image'
       run: |
           docker build -t cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:haram -f Dockerfile .
-          docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:haram cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
+          docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:haram cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha
           
     - name: 'Push image'
     - run: |
-          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
-
+          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha
+        
     - name: Update Kubernetes resources
       run: |
           echo "`ls`"
           cd manifests/overlays/prod
           kustomize edit set image cepgbaseacr/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           cat kustomization.yaml
-
+        
     - name: Commit files
       run: |
           cd manifests
