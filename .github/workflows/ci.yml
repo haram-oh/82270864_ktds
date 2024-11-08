@@ -21,6 +21,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+        
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
@@ -29,8 +30,7 @@ jobs:
 
     - name: 'Gen Version'
       id: gen-version
-      run: |
-        echo "::set-output name=VERSION::`date +%Y%m%d%H%M`"
+      run: echo "VERSION=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         
     - name: 'ACR login'
       uses: azure/docker-login@v1
@@ -41,18 +41,17 @@ jobs:
 
     - name: 'Build & Tag Image'
       run: |
-            docker build -t cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }} -f Dockerfile .
-            docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }} cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }}
+          docker build -t cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} -f Dockerfile .
     
     - name: 'Push image'
-    - run: |
-          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }}
-    
+      run: |
+          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+
     - name: Update Kubernetes resources
       run: |
           echo "`ls`"
           cd manifests/overlays/prod
-          kustomize edit set image cepgbaseacr/${{ env.IMAGE_NAME }}:${{ steps.gen-version.outputs.VERSION }}
+          kustomize edit set image cepgbaseacr/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           cat kustomization.yaml
     
     - name: Commit files
@@ -61,5 +60,5 @@ jobs:
           echo "`ls`"
           git config --global user.email "rkwhk7203@naver.com"
           git config --global user.name "haram"
-          git commit -am "Update image tag"
+          git commit -am "Update image tag" || echo "No changes to commit"
           git push -u origin main
