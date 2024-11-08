@@ -35,8 +35,8 @@ jobs:
     - name: 'ACR login'
       uses: azure/docker-login@v1
       with:
-        login-server: cepgbaseacr.azurecr.io
-        username: e9a4cced-cbc8-42f0-acf9-06e65396ad99
+        login-server: ce82270864acr.azurecr.io
+        username: ce82270864acr
         password: sJn8Q~~Ymz9oTOvYHEdU56XF7MKNguMsro0HScum
 
     - name: 'Build Image'
