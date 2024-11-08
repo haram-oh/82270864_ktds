@@ -1,6 +1,6 @@
-on: workflow_dispatch
-
 name: github action CI
+
+on: workflow_dispatch
 
 env:
   IMAGE_NAME: cloud-sample
@@ -52,7 +52,6 @@ jobs:
         password: sJn8Q~~Ymz9oTOvYHEdU56XF7MKNguMsro0HScum
     - run: |
           docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
-  
 
     - name: Update Kubernetes resources
       run: |
@@ -60,7 +59,7 @@ jobs:
           cd manifests/overlays/prod
           kustomize edit set image cepgbaseacr/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           cat kustomization.yaml
-    
+
     - name: Commit files
       run: |
           cd manifests
