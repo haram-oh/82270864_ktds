@@ -41,15 +41,10 @@ jobs:
 
     - name: 'Build Image'
       run: |
-          docker build -t cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} -f Dockerfile .
-          docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
+          docker build -t cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:haram -f Dockerfile .
+          docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:haram cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
           
     - name: 'Push image'
-      uses: azure/docker-login@v1
-      with:
-        login-server: cepgbaseacr.azurecr.io
-        username: e9a4cced-cbc8-42f0-acf9-06e65396ad99
-        password: sJn8Q~~Ymz9oTOvYHEdU56XF7MKNguMsro0HScum
     - run: |
           docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
 
