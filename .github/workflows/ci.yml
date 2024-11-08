@@ -42,17 +42,17 @@ jobs:
     - name: 'Build Image'
       run: |
           docker build -t cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:haram -f Dockerfile .
-          docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:haram cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha
+          docker tag cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:haram cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           
     - name: 'Push image'
-    - run: |
-          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha
+      run: |
+          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
         
     - name: Update Kubernetes resources
       run: |
           echo "`ls`"
           cd manifests/overlays/prod
-          kustomize edit set image cepgbaseacr/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          kustomize edit set image cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           cat kustomization.yaml
         
     - name: Commit files
