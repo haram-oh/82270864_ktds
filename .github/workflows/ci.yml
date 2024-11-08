@@ -49,7 +49,7 @@ jobs:
           
     - name: 'Push image'
     - run: |
-          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1 
+          docker push cepgbaseacr.azurecr.io/${{ env.IMAGE_NAME }}:ha1
   
 
     - name: Update Kubernetes resources
