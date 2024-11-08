@@ -41,7 +41,7 @@ jobs:
         
     - name: 'Build Image'
       run: |
-          docker build -t ce82270864acr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}-f Dockerfile .
+          docker build -t ce82270864acr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} -f Dockerfile .
           docker tag ce82270864acr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} ce82270864acr.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           
     - name: 'Push image'
